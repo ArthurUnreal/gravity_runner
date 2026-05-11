@@ -5,7 +5,7 @@
 [ext_resource type="Shader" uid="uid://dctkuach7ym1x" path="res://shaders/flip_ring.gdshader" id="3_flipring"]
 [ext_resource type="Shader" uid="uid://1apg3uymlsn6" path="res://shaders/trail.gdshader" id="4_trail"]
 [ext_resource type="PackedScene" path="res://scenes/flip_particles.tscn" id="5_flippart"]
-[ext_resource type="Texture2D" uid="uid://cjagsij8u4bv3" path="res://assets/white_256.png" id="6_white"]
+[ext_resource type="Texture2D" path="res://assets/white_32.png" id="6_white"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 16.0
@@ -19,19 +19,18 @@ script = ExtResource("1_player")
 shape = SubResource("CircleShape2D_1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = null
 
 [node name="PlayerShader" type="Sprite2D" parent="."]
 modulate = Color(0.91, 0.27, 0.38, 1.0)
-scale = Vector2(48, 48)
+scale = Vector2(1, 1)
 texture_filter = 1
 texture = ExtResource("6_white")
 shader = ExtResource("2_shader")
 shader_parameter/base_color = Color(0.91, 0.27, 0.38, 1.0)
 shader_parameter/glow_color = Color(0.91, 0.27, 0.38, 0.0)
-shader_parameter/glow_radius = 20.0
+shader_parameter/glow_radius = 16.0
 shader_parameter/pulse_speed = 2.5
-shader_parameter/inner_radius = 8.0
+shader_parameter/inner_radius = 6.0
 shader_parameter/flip_scale_y = 1.0
 
 [node name="Trail" type="Line2D" parent="."]
@@ -48,14 +47,13 @@ shader_parameter/fade_power = 2.5
 [node name="FlipRing" type="Sprite2D" parent="."]
 visible = false
 modulate = Color(0.91, 0.27, 0.38, 1.0)
-scale = Vector2(32, 32)
+scale = Vector2(2, 2)
 texture_filter = 1
 texture = ExtResource("6_white")
 shader = ExtResource("3_flipring")
 shader_parameter/progress = 0.0
-shader_parameter/max_radius = 1.8
-shader_parameter/ring_color = Color(0.91, 0.27, 0.38, 1.0)
-shader_parameter/ring_thickness = 0.2
+shader_parameter/max_radius = 30.0
+shader_parameter/ring_thickness = 6.0
 
 [node name="SquashTimer" type="Timer" parent="."]
 wait_time = 0.12

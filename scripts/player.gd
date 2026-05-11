@@ -214,7 +214,7 @@ func _apply_squash(delta: float) -> void:
 	
 	if player_shader:
 		var final_scale = squash_scale * Vector2(1.0, abs(gravity_direction))
-		player_shader.scale = Vector2(48, 48) * final_scale
+		player_shader.scale = final_scale
 
 func die() -> void:
 	if is_dead:
