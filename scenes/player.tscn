@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Shader" path="res://shaders/player_glow.gdshader" id="2_shader"]
 [ext_resource type="Shader" path="res://shaders/flip_ring.gdshader" id="3_flipring"]
 [ext_resource type="Shader" path="res://shaders/trail.gdshader" id="4_trail"]
 [ext_resource type="PackedScene" path="res://scenes/flip_particles.tscn" id="5_flippart"]
+[ext_resource type="Texture2D" path="res://assets/white.png" id="6_white"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 16.0
@@ -24,6 +25,7 @@ material = null
 modulate = Color(0.91, 0.27, 0.38, 1.0)
 scale = Vector2(48, 48)
 texture_filter = 1
+texture = ExtResource("6_white")
 shader = ExtResource("2_shader")
 shader_parameter/base_color = Color(0.91, 0.27, 0.38, 1.0)
 shader_parameter/glow_color = Color(0.91, 0.27, 0.38, 0.0)
@@ -48,6 +50,7 @@ visible = false
 modulate = Color(0.91, 0.27, 0.38, 1.0)
 scale = Vector2(32, 32)
 texture_filter = 1
+texture = ExtResource("6_white")
 shader = ExtResource("3_flipring")
 shader_parameter/progress = 0.0
 shader_parameter/max_radius = 1.8

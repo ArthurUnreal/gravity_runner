@@ -3,21 +3,26 @@ shader_type canvas_item;
 // 玩家发光圆形 shader
 uniform vec4 base_color : source_color = vec4(0.91, 0.27, 0.38, 1.0);  // #e94560
 uniform vec4 glow_color : source_color = vec4(0.91, 0.27, 0.38, 0.0);
-uniform float glow_radius : hint_range(0.0, 2.0) = 0.6;
-uniform float pulse_speed : hint_range(0.0, 10.0) = 2.0;
-uniform float inner_radius : hint_range(0.0, 1.0) = 0.3;
+uniform float glow_radius : hint_range(0.0, 2.0) = 0.55;
+uniform float pulse_speed : hint_range(0.0, 10.0) = 2.5;
+uniform float inner_radius : hint_range(0.0, 1.0) = 0.28;
 
 // 上下翻转时的y轴缩放 (from player.gd gravity_direction)
 uniform float flip_scale_y : hint_range(-1.0, 1.0) = 1.0;
 
 void fragment() {
-    // UV 标准化，中心为 (0,0)
-    vec2 uv = (UV - vec2(0.5)) / vec2(0.5);
+    // 用 VERTEX 坐标，不依赖贴图分辨率
+    vec2 uv = (VERTEX) / (TEXTURE_PIXEL_SIZE * vec2(texture_size(TEXTURE, 0)));
+    // 或者更简单：用 UV 直接，从中心标准化
+    uv = UV;
+    
+    // 标准化到中心
+    vec2 centered = (UV - vec2(0.5)) * 2.0;
     
     // 应用翻转缩放
-    uv.y /= flip_scale_y;
+    centered.y /= flip_scale_y;
     
-    float dist = length(uv);
+    float dist = length(centered);
     
     // 脉冲呼吸效果
     float pulse = sin(TIME * pulse_speed) * 0.5 + 0.5;
@@ -42,7 +47,7 @@ void fragment() {
     final_color.rgb = mix(final_color.rgb, vec3(1.0), rim * 0.4);
     
     // 核心更亮
-    final_color.rgb += (core - dist) * 0.2;
+    final_color.rgb += (core - dist * 0.5) * 0.2;
     
     // alpha: 实心圆 + 发光边缘
     float alpha = max(core, glow * 0.6);

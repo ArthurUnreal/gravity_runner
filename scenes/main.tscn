@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/ui.gd" id="5_ui"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="6_player"]
 [ext_resource type="Shader" path="res://shaders/starfield.gdshader" id="7_bg"]
+[ext_resource type="Texture2D" path="res://assets/white_256.png" id="8_white256"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -27,6 +28,7 @@ color = Color(0.1, 0.1, 0.15, 1)
 position = Vector2(270, 480)
 scale = Vector2(540, 960)
 texture_filter = 1
+texture = ExtResource("8_white256")
 shader = ExtResource("7_bg")
 shader_parameter/star_color = Vector3(1, 1, 1)
 shader_parameter/star_density = 0.003
