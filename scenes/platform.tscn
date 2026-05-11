@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene format=2]
 
-[ext_resource type="Script" path="res://scripts/platform.gd" id="1_platform"]
-[ext_resource type="Shader" path="res://shaders/platform_glow.gdshader" id="2_pshader"]
-[ext_resource type="Texture2D" path="res://assets/white.png" id="3_white"]
+[ext_resource type="Script" uid="uid://dgwx75ssgu8kc" path="res://scripts/platform.gd" id="1_platform"]
+[ext_resource type="Shader" uid="uid://b26nkx3bgm3xt" path="res://shaders/platform_glow.gdshader" id="2_pshader"]
+[ext_resource type="Texture2D" uid="uid://cjagsij8u4bv3" path="res://assets/white_256.png" id="3_white"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p"]
 size = Vector2(120, 12)

@@ -1,0 +1,6 @@
+res://scenes/flip_particles.tscn
+res://scenes/platform.tscn
+res://scenes/player.tscn
+res://scripts/platform_generator.gd
+res://shaders/flip_ring.gdshader
+res://shaders/player_glow.gdshader
