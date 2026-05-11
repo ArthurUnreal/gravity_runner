@@ -29,9 +29,9 @@ texture = ExtResource("6_white")
 shader = ExtResource("2_shader")
 shader_parameter/base_color = Color(0.91, 0.27, 0.38, 1.0)
 shader_parameter/glow_color = Color(0.91, 0.27, 0.38, 0.0)
-shader_parameter/glow_radius = 0.55
+shader_parameter/glow_radius = 20.0
 shader_parameter/pulse_speed = 2.5
-shader_parameter/inner_radius = 0.28
+shader_parameter/inner_radius = 8.0
 shader_parameter/flip_scale_y = 1.0
 
 [node name="Trail" type="Line2D" parent="."]
