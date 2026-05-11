@@ -23,19 +23,19 @@ godot --headless --path gravity_runner
 gravity_runner/
 ├── project.godot          # 项目配置（540×960竖屏）
 ├── shaders/
-│   ├── player_glow.shader    # 玩家：发光圆形 + 呼吸脉冲
-│   ├── platform_glow.shader  # 平台：描边发光 + 扫描线
-│   ├── flip_ring.shader      # 翻转：扩散光环
-│   ├── trail.shader          # 拖尾：渐隐效果
-│   └── starfield.shader      # 背景：视差星空
+│   ├── player_glow.gdshader    # 玩家：发光圆形 + 呼吸脉冲
+│   ├── platform_glow.gdshader  # 平台：描边发光 + 扫描线
+│   ├── flip_ring.gdshader      # 翻转：扩散光环
+│   ├── trail.gdshader          # 拖尾：渐隐效果
+│   └── starfield.gdshader      # 背景：视差星空
 ├── scripts/
 │   ├── main.gd               # 主场景 & 游戏流程
-│   ├── game_manager.gd       # 状态 + 难度曲线（1.0→3.0）
-│   ├── player.gd             # 重力翻转 + 落地squash
+│   ├── game_manager.gd       # 状态 + 难度曲线（Sigmoid 1.0→2.6）
+│   ├── player.gd             # 重力翻转 + 落地squash + coyote time
 │   ├── platform.gd           # 平台（普通/移动/危险）
 │   ├── platform_generator.gd # 可达性保证的无尽生成
 │   ├── screen_shake.gd       # 屏幕震动
-│   ├── ui.gd                 # 分数/最高分/开始/结束界面
+│   ├── ui.gd                # 分数/最高分/开始/结束界面
 │   └── flip_particles.gd     # 翻转粒子控制器
 └── scenes/
     ├── main.tscn              # 主场景
@@ -54,15 +54,13 @@ gravity_runner/
 | **trail** | 拖尾渐隐，从新到旧自然淡出 |
 | **starfield** | 视差滚动星空，双层闪烁 |
 
-## 难度系统
+## 难度设计
 
-- 难度随时间从 1.0 增长到 3.0
-- 影响：平台宽度 ↓ / 间距 ↑ / 移动平台概率 ↑ / 危险平台概率 ↑
-- 分数 = 时间 × 10 × 当前难度
+- Sigmoid 曲线：15s 学习期 → 60s 高压期 → 无限模式
+- 分数 = 时间 × 12 × 难度^0.7
 
 ## 待优化
 
 - [ ] 音效与音乐
 - [ ] 成就系统
 - [ ] 安卓/微信小游戏导出
-- [ ] 难度曲线调参（当前参数偏保守）
