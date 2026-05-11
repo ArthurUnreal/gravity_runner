@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="Shader" path="res://shaders/player_glow.gdshader" id="2_shader"]
+[ext_resource type="Shader" path="res://shaders/flip_ring.gdshader" id="3_flipring"]
+[ext_resource type="Shader" path="res://shaders/trail.gdshader" id="4_trail"]
+[ext_resource type="PackedScene" path="res://scenes/flip_particles.tscn" id="5_flippart"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 16.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 1
+collision_mask = 2
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = null
+
+[node name="PlayerShader" type="Sprite2D" parent="."]
+modulate = Color(0.91, 0.27, 0.38, 1.0)
+scale = Vector2(48, 48)
+texture_filter = 1
+shader = ExtResource("2_shader")
+shader_parameter/base_color = Color(0.91, 0.27, 0.38, 1.0)
+shader_parameter/glow_color = Color(0.91, 0.27, 0.38, 0.0)
+shader_parameter/glow_radius = 0.55
+shader_parameter/pulse_speed = 2.5
+shader_parameter/inner_radius = 0.28
+shader_parameter/flip_scale_y = 1.0
+
+[node name="Trail" type="Line2D" parent="."]
+width = 8.0
+default_color = Color(0.91, 0.27, 0.38, 0.5)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+shader = ExtResource("4_trail")
+shader_parameter/trail_length = 0.8
+shader_parameter/trail_color = Color(0.91, 0.27, 0.38, 0.5)
+shader_parameter/fade_power = 2.5
+
+[node name="FlipRing" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.91, 0.27, 0.38, 1.0)
+scale = Vector2(32, 32)
+texture_filter = 1
+shader = ExtResource("3_flipring")
+shader_parameter/progress = 0.0
+shader_parameter/max_radius = 1.8
+shader_parameter/ring_color = Color(0.91, 0.27, 0.38, 1.0)
+shader_parameter/ring_thickness = 0.2
+
+[node name="SquashTimer" type="Timer" parent="."]
+wait_time = 0.12
+one_shot = true
+
+[node name="FlipAnimTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="FlipParticles" parent="." instance=ExtResource("5_flippart")]
+visible = false

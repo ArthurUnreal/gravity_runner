@@ -1,0 +1,223 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_gm"]
+[ext_resource type="Script" path="res://scripts/screen_shake.gd" id="3_ss"]
+[ext_resource type="Script" path="res://scripts/platform_generator.gd" id="4_pg"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="5_ui"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="6_player"]
+[ext_resource type="Shader" path="res://shaders/starfield.gdshader" id="7_bg"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 540.0
+offset_bottom = 960.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.15, 1)
+
+[node name="Starfield" type="Sprite2D" parent="."]
+position = Vector2(270, 480)
+scale = Vector2(540, 960)
+texture_filter = 1
+shader = ExtResource("7_bg")
+shader_parameter/star_color = Vector3(1, 1, 1)
+shader_parameter/star_density = 0.003
+shader_parameter/twinkle_speed = 1.5
+shader_parameter/parallax_depth = 0.3
+shader_parameter/top_color = Color(0.05, 0.05, 0.12, 1.0)
+shader_parameter/bottom_color = Color(0.08, 0.05, 0.15, 1.0)
+shader_parameter/scroll_speed = 0.05
+
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("2_gm")
+
+[node name="ScreenShake" type="Node2D" parent="."]
+script = ExtResource("3_ss")
+
+[node name="PlatformGenerator" type="Node2D" parent="."]
+script = ExtResource("4_pg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(270, 480)
+limit_left = -100
+limit_top = -1000
+limit_right = 640
+limit_bottom = 1100
+limit_smoothed = true
+smoothing_enabled = true
+smoothing_speed = 5.0
+position_smoothing_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("6_player")]
+position = Vector2(100, 760)
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("5_ui")
+
+[node name="VBox" type="VBoxContainer" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 120.0
+grow_horizontal = 2
+
+[node name="ScoreLabel" type="Label" parent="UI/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "SCORE: 0"
+horizontal_alignment = 1
+
+[node name="BestLabel" type="Label" parent="UI/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 14
+text = "BEST: 0"
+horizontal_alignment = 1
+
+[node name="DifficultyBar" type="ProgressBar" parent="UI/VBox"]
+layout_mode = 2
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="StartScreen" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/StartScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="VBox" type="VBoxContainer" parent="UI/StartScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI/StartScreen/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.27, 0.38, 1)
+theme_override_font_sizes/font_size = 32
+text = "GRAVITY RUNNER"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="UI/StartScreen/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 14
+text = "按空格键翻转重力"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="UI/StartScreen/VBox"]
+layout_mode = 2
+text = "开始游戏"
+
+[node name="QuitButton" type="Button" parent="UI/StartScreen/VBox"]
+layout_mode = 2
+text = "退出"
+
+[node name="GameOverScreen" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="VBox" type="VBoxContainer" parent="UI/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI/GameOverScreen/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.27, 0.38, 1)
+theme_override_font_sizes/font_size = 28
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="ScoreTitle" type="Label" parent="UI/GameOverScreen/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 14
+text = "得分"
+horizontal_alignment = 1
+
+[node name="ScoreValue" type="Label" parent="UI/GameOverScreen/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "0"
+horizontal_alignment = 1
+
+[node name="BestTitle" type="Label" parent="UI/GameOverScreen/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+text = "最高分"
+horizontal_alignment = 1
+
+[node name="BestValue" type="Label" parent="UI/GameOverScreen/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "0"
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="UI/GameOverScreen/VBox"]
+layout_mode = 2
+text = "再来一局"
+
+[node name="MenuButton" type="Button" parent="UI/GameOverScreen/VBox"]
+layout_mode = 2
+text = "返回菜单"
